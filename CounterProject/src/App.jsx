@@ -27,7 +27,7 @@ function App() {
 
   return (
     <>
-      <h1>Chai aur react with Hitesh sir</h1>
+      <h1>React Counter Project</h1>
       <h2>Counter Value :{counter}</h2>
       <button onClick={addValue}>Increase Value</button>
       <br /> <br/>
