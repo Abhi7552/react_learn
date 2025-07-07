@@ -4,10 +4,10 @@ import useCurrencyInfo from './hooks/useCurrencyInfo';
 
 function App() {
 
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [fromCurrency, setFromCurrency] = useState('eur');
   const [toCurrency, setToCurrency] = useState('inr');
-  const [convertedAmount, setConvertedAmount] = useState("");
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
   const fromCurrencyInfo = useCurrencyInfo(fromCurrency);
 
@@ -25,7 +25,7 @@ function App() {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-gradient-to-br from-indigo-500 via-purple-400 to-pink-300">
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-shadow-amber-600">
       <div className="w-full text-center mb-6">
         <h1 className="text-4xl font-extrabold text-white drop-shadow-lg tracking-wide">💱 Currency Converter</h1>
         <p className="text-lg text-white/80 mt-2">Convert currencies instantly with live rates</p>
@@ -82,6 +82,8 @@ function App() {
           </form>
         </div>
       </div>
+
+      <footer className='w-full p-2 text-2xl text-center fixed bottom-3'>Copyright @Abhishek7552 2k25 </footer>
     </div>
   )
 }
