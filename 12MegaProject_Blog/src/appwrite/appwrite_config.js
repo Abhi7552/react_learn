@@ -1,7 +1,6 @@
 import config from "../config/config";
 import { Client, ID, Storage, Databases, Query } from "appwrite";
 
-
 export class AppwriteServices {
     client = new Client();
     storage;
@@ -101,7 +100,6 @@ export class AppwriteServices {
         }
     }
 
-
     // Appwrite storage services
     async uploadFile(file) {
         try {
@@ -127,7 +125,6 @@ export class AppwriteServices {
     getFilePreview(fileId) {
         return this.storage.getFilePreview(config.appwriteBucketId, fileId);
     }
-
     
 }
 
