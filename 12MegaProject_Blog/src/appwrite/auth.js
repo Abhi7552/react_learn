@@ -28,7 +28,7 @@ export class AuthService {
 
     async login({email, password}) {
         try {
-            const response = await this.account.createEmailSession(email, password);
+            const response = await this.account.createEmailPasswordSession(email, password);
             if(response) {
                 //can redirect to home page
                 return response;

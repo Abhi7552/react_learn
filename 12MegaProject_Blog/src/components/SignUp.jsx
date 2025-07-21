@@ -12,23 +12,32 @@ function SignUp() {
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const signUp = async (data) => {
         setError("");
+        setLoading(true);
         try {
-            const session = await authService.register(data);
+            // Ensure correct keys are passed
+            const { name, email, password } = data;
+            const session = await authService.createAccount({ name, email, password });
+            console.log('Session after signup:', session);
             if (session) {
-                const userdata = await authService.createAccount(data);
-                if (userdata) {
-                    const user = await authService.getCurrentUser();
-                    if (user) {
-                        dispatch(login(user));
-                        navigate("/");
-                    }
+                const user = await authService.getCurrentUser();
+                console.log('User after signup:', user);
+                if (user) {
+                    dispatch(login(user));
+                    navigate("/");
+                } else {
+                    setError("Signup succeeded but could not fetch user. Try logging in.");
                 }
+            } else {
+                setError("Signup failed: No session returned.");
             }
         } catch (err) {
-            setError(err.message);
+            setError(err.message || JSON.stringify(err));
+        } finally {
+            setLoading(false);
         }
     }
     return (
@@ -44,6 +53,7 @@ function SignUp() {
                     Already have an account? <Link to="/login" className='text-blue-500 hover:underline'>Sign In</Link>
                 </p>
                 {error && <p className='text-red-500 mb-4'>{error}</p>}
+                {loading && <p className='text-blue-500 mb-4'>Signing up...</p>}
 
                 <form onSubmit={handleSubmit(signUp)} className='w-full max-w-lg bg-white rounded-xl p-10 border border-black/10'>
                     <Input
@@ -56,11 +66,7 @@ function SignUp() {
                         label="Email: "
                         type="email"
                         placeholder="Enter your email"
-                        {...register("email", {
-                            required: true, validate: {
-                                matchPattern: (value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value) || "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
-                            }
-                        })}
+                        {...register("email", { required: true })}
                     />
                     <Input
                         label="Password: "
@@ -68,7 +74,7 @@ function SignUp() {
                         placeholder="Enter your password"
                         {...register("password", { required: true })}
                     />
-                    <Button type="submit">Sign Up</Button>
+                    <Button type="submit" disabled={loading}>Sign Up</Button>
                 </form>
             </div>
 

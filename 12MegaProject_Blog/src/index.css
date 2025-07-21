@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+html, body, #root {
+  height: 100%;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.7s ease-in;
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.7s cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
